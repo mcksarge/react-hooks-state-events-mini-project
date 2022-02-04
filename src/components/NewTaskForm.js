@@ -1,6 +1,19 @@
 import React from "react";
 
-function NewTaskForm() {
+function NewTaskForm({ categories }) {
+  let catList = []
+
+
+//**********Render category dropdown list, excluding (All) ********** */
+  catList = categories.filter(cat => cat !== "All")
+  catList = catList.map((cat) => {
+    return (
+      <option key={cat}>{cat}</option>
+    )
+  })
+//************************************************ */
+
+
   return (
     <form className="new-task-form">
       <label>
@@ -10,7 +23,7 @@ function NewTaskForm() {
       <label>
         Category
         <select name="category">
-          {/* render <option> elements for each category here */}
+          {catList}
         </select>
       </label>
       <input type="submit" value="Add task" />
