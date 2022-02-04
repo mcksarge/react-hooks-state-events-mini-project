@@ -13,17 +13,33 @@ function App() {
   const [currentCategories, setCurrentCategories] = useState('All');
 
 
-function filter(cat) {
-  setCurrentCategories(cat)
-}
 
+  function filter(cat) {
+    setCurrentCategories(cat)
+  }
+
+  function newTask (task) {
+    setCurrentTasks([...currentTasks, task]);
+    console.log(currentTasks)
+  }
+
+//*********Deletes Task************* */
+function handleDelete (name) {
+  const newTasks = currentTasks.filter(task => {
+    if (task.text !== name) {
+      return task;
+    }
+  })
+  setCurrentTasks(newTasks);
+
+}
 
   return (
     <div className="App">
       <h2>My tasks</h2>
       <CategoryFilter categories={CATEGORIES} catFilter={filter} />
-      <NewTaskForm categories={CATEGORIES} />
-      <TaskList tasks={TASKS} categories={currentCategories} />
+      <NewTaskForm categories={CATEGORIES} onTaskFormSubmit={newTask} />
+      <TaskList tasks={currentTasks} categories={currentCategories} taskDeleter={handleDelete} />
     </div>
   );
 }

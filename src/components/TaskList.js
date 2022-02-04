@@ -4,26 +4,19 @@ import Task from "./Task"; //Importing Task Component
 
 
 
-function TaskList({tasks, categories}) {
-  const [currentTasks, setCurrentTask] = useState(tasks)
-  let newList = []
-//*********Deletes Task************* */
-  function handleDelete (name) {
-    const newTasks = currentTasks.filter(task => {
-      if (task.text !== name) {
-        return task;
-      }
-    })
-    setCurrentTask(newTasks);
+function TaskList({tasks, categories, taskDeleter}) {
 
+  let newList = []
+
+  function handleDelete(name){
+    taskDeleter(name)
   }
-//*************************************** */
 
 //***********Maps the Task data********** */
  
 
 if (categories === 'All') {
-  newList = currentTasks.map((task) => {
+  newList = tasks.map((task) => {
     return (
       <Task 
       key={task.text} 
@@ -34,7 +27,7 @@ if (categories === 'All') {
     )
   })
 } else {
-  newList = currentTasks.filter(task => task.category === categories);
+  newList = tasks.filter(task => task.category === categories);
   newList = newList.map((task) => {
     return (
       <Task 
